@@ -35,6 +35,9 @@
 
 > Use case: photorealistic-natural. Asset: one premium website hero photograph for an independent precision TIG welding atelier, horizontal wide composition (3:2). Ultra-detailed cinematic macro photograph of the hands of a skilled TIG welder in worn dark charcoal leather gloves guiding a TIG torch and slim filler rod at a precise angle along a cylindrical brushed stainless steel tube. Bright small icy white-blue TIG arc at center-right, beautifully defined stacked-dime silver weld bead, subtle violet/gold heat tint. No showers of sparks (this is TIG, not grinding), no flames. Near-black workshop background, deep cinematic shadows, tactile authentic steel, editorial industrial luxury photography. Welder hands and torch enter from upper-right and right, tube runs diagonally from lower-left to upper-right; keep upper-left third dark and uncluttered for a website. Photography feels real and physically coherent, high contrast but broad silver highlights, subtle analog film grain, no neon backgrounds, no text, no logos, no watermarks, no typography, not a website screenshot. Single image only.
 
+**Оновлення 2026-11-06 (версія Velira):** `assets/hero.jpg` прибрано з сайту й репо — бриф забороняє згенеровані фото робіт.
+Перший екран тепер — справжнє фото `older-1.jpg`. Нових згенерованих зображень немає; світіння дуги малює код (WebGL), а не картинка.
+
 ## Шрифти
 
 Manrope 400/600 та Oswald 500 завантажені через Google Fonts; кирилиця перевіряється у фактичному рендері українських текстів. Файли OFL розміщено поруч зі шрифтами. Текстовий логотип і графічний знак створені локально у HTML/SVG для цього дизайну; оригінальне зображення логотипа з профілю не підмінювалося.

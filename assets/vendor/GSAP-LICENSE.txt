@@ -1,0 +1,4 @@
+GSAP 3.15.0 — GreenSock Standard "No Charge" License: https://gsap.com/standard-license
+Copied from a local npm install (node_modules/gsap/dist), unmodified.
+Checked 2026-11-06: use on websites for any client is a Permitted Use; AI tools that generate GSAP code are
+explicitly not a Prohibited Use. Do not use GSAP in a visual no-code animation builder competing with Webflow.

@@ -1,138 +1,236 @@
-'use strict';
+/* KOLOS TIG — рух за motion.md: «Шолом угору» + прохід дуги + відблиск на шві. */
+(function () {
+  'use strict';
+  var html = document.documentElement;
+  var reduce = !window.matchMedia || matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGsap = typeof window.gsap !== 'undefined';
 
-const $ = (selector, root = document) => root.querySelector(selector);
-const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-
-// Keep navigation and dialogs usable with the keyboard and on touchscreens.
-const menuToggle = $('.menu-toggle');
-const mobileNav = $('#mobile-nav');
-function setMenu(open) {
-  menuToggle.setAttribute('aria-expanded', String(open));
-  menuToggle.setAttribute('aria-label', open ? 'Закрити меню' : 'Відкрити меню');
-  mobileNav.classList.toggle('open', open);
-  mobileNav.inert = !open;
-}
-menuToggle.addEventListener('click', () => setMenu(menuToggle.getAttribute('aria-expanded') !== 'true'));
-$$('a', mobileNav).forEach(link => link.addEventListener('click', () => setMenu(false)));
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && menuToggle.getAttribute('aria-expanded') === 'true') {
-    setMenu(false);
-    menuToggle.focus();
+  /* Шапка: поки CTA hero на екрані, кнопка шапки — контур (одна основна дія на екрані). */
+  var heroCta = document.getElementById('hero-cta');
+  if (heroCta && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      document.body.classList.toggle('hero-on', es[0].isIntersecting);
+    }).observe(heroCta);
   }
-});
-window.matchMedia('(min-width: 601px)').addEventListener('change', event => { if (event.matches) setMenu(false); });
 
-const requestDialog = $('#request-dialog');
-const galleryDialog = $('#gallery-dialog');
-let previousFocus;
-function openDialog(dialog) {
-  previousFocus = document.activeElement;
-  setMenu(false);
-  dialog.showModal();
-  document.body.classList.add('modal-open');
-}
-function closeDialog(dialog) {
-  dialog.close();
-}
-$$('dialog').forEach(dialog => {
-  $('[data-close-dialog]', dialog).addEventListener('click', () => closeDialog(dialog));
-  dialog.addEventListener('click', event => {
-    const bounds = dialog.getBoundingClientRect();
-    if (event.target === dialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) closeDialog(dialog);
-  });
-  dialog.addEventListener('close', () => {
-    document.body.classList.remove('modal-open');
-    if (previousFocus && !previousFocus.closest('[inert]')) previousFocus.focus();
-    else menuToggle.focus();
-  });
-});
-$$('[data-open-request]').forEach(button => button.addEventListener('click', () => {
-  if (button.dataset.material) $('#material').value = button.dataset.material;
-  $('#copy-status').textContent = '';
-  openDialog(requestDialog);
-}));
+  if (reduce || !hasGsap) { html.classList.remove('intro'); return; }
+  var gsap = window.gsap;
+  if (window.ScrollTrigger) gsap.registerPlugin(window.ScrollTrigger);
 
-// Native details retain useful behavior even when JavaScript is unavailable.
-$$('.service').forEach(service => service.addEventListener('toggle', () => {
-  if (!service.open) return;
-  $$('.service').forEach(other => { if (other !== service) other.open = false; });
-  const image = $('#service-image');
-  image.src = service.dataset.image;
-  image.alt = service.dataset.alt;
-}));
+  var EASE_IN = 'expo.out', EASE_MOVE = 'power2.inOut';
+  var lens = document.querySelector('.lens');
+  var img = lens && lens.querySelector('img');
+  var arcBox = lens && lens.querySelector('.arc');
+  var poster = lens && lens.querySelector('.arc__poster');
+  var ARC_UV = [0.205, 0.813]; // кінчик пальника на older-1 (903×1199)
 
-$$('.filter').forEach(button => button.addEventListener('click', () => {
-  $$('.filter').forEach(filter => {
-    const active = filter === button;
-    filter.classList.toggle('active', active);
-    filter.setAttribute('aria-pressed', String(active));
-  });
-  let visible = 0;
-  $$('.work-card').forEach(card => {
-    card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter;
-    if (!card.hidden) visible++;
-  });
-  $('.gallery-status').textContent = `Показано робіт: ${visible}`;
-}));
-
-const gallery = [
-  { image: 'assets/work/older-2.jpg', title: 'Геометрія шва', alt: 'Зварний шов з рівномірним рельєфом зблизька', source: 'https://www.olx.ua/d/uk/obyavlenie/zvaryuvannya-argonom-tig-remont-nerzhavyki-alyumnyu-stal-IDZVKvC.html' },
-  { image: 'assets/work/instagram-3.jpg', title: 'Бак для опалення', alt: 'Виготовлений металевий бак для опалення в майстерні KOLOS TIG', source: 'https://www.instagram.com/kolos.tig/p/DeOrWaziLXO/' },
-  { image: 'assets/work/instagram-11.jpg', title: 'Інформаційна стійка', alt: 'Металева інформаційна стійка, виготовлена в майстерні KOLOS TIG', source: 'https://www.instagram.com/kolos.tig/p/Db-GcSLCFna/' }
-];
-let galleryIndex = 0;
-function showGallery(index) {
-  galleryIndex = (index + gallery.length) % gallery.length;
-  const item = gallery[galleryIndex];
-  $('#gallery-image').src = item.image;
-  $('#gallery-image').alt = item.alt;
-  $('#gallery-title').textContent = item.title;
-  $('#gallery-source').href = item.source;
-  $('#gallery-count').textContent = `0${galleryIndex + 1} / 0${gallery.length}`;
-}
-$$('[data-gallery]').forEach(button => button.addEventListener('click', () => {
-  showGallery(Number(button.dataset.gallery));
-  openDialog(galleryDialog);
-}));
-$('#gallery-prev').addEventListener('click', () => showGallery(galleryIndex - 1));
-$('#gallery-next').addEventListener('click', () => showGallery(galleryIndex + 1));
-galleryDialog.addEventListener('keydown', event => {
-  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-    event.preventDefault();
-    showGallery(galleryIndex + (event.key === 'ArrowRight' ? 1 : -1));
+  /* Де дуга в обрізаному object-fit: cover кадрі (частки боксу). */
+  function arcPoint() {
+    var w = lens.clientWidth, h = lens.clientHeight, iw = 903, ih = 1199;
+    var s = Math.max(w / iw, h / ih), rw = iw * s, rh = ih * s;
+    var pos = getComputedStyle(img).objectPosition.split(' ');
+    var px = parseFloat(pos[0]) / 100, py = parseFloat(pos[1]) / 100;
+    var ox = (w - rw) * px, oy = (h - rh) * py;
+    return { x: (ox + ARC_UV[0] * rw) / w, y: (oy + ARC_UV[1] * rh) / h, w: w, h: h };
   }
-});
 
-// A prepared message is copied locally; no personal data or message is sent.
-$('#request-form').addEventListener('submit', async event => {
-  event.preventDefault();
-  const description = $('#task-description').value.trim();
-  if (description.length < 10) {
-    $('#task-description').setCustomValidity('Опишіть задачу хоча б у 10 символах.');
-    $('#task-description').reportValidity();
-    return;
+  /* ---------- WebGL-дуга (сирий WebGL1, без бібліотек) ---------- */
+  function makeArc(box, mobile) {
+    var c = document.createElement('canvas');
+    var gl = c.getContext('webgl', { alpha: false, antialias: false, premultipliedAlpha: false, powerPreference: 'low-power' });
+    if (!gl) return null;
+    var vs = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+    var fs = [
+      'precision mediump float;',
+      'uniform vec2 uRes;uniform vec2 uPos;uniform float uI;uniform float uT;uniform float uE;',
+      'float h(float n){return fract(sin(n)*43758.5453);}',
+      'float n1(float x){float i=floor(x),f=fract(x);return mix(h(i),h(i+1.),f*f*(3.-2.*f));}',
+      'void main(){',
+      ' float S=min(uRes.x,uRes.y);',
+      ' vec2 p=(gl_FragCoord.xy-uPos)/S; float d=length(p);',
+      ' float fl=.74+.2*n1(uT*41.)+.14*n1(uT*97.+3.1);',
+      ' float I=uI*fl;',
+      ' float core=exp(-d*d*2200.);',
+      ' float halo=.022/(d+.022); halo*=halo;',
+      ' float streak=exp(-abs(p.y)*170.)*exp(-abs(p.x)*4.2);',
+      ' vec3 blue=vec3(.42,.77,1.); vec3 lilac=vec3(.66,.6,1.);',
+      ' vec3 col=vec3(.97,.99,1.)*core*I*1.7 + mix(blue,lilac,smoothstep(0.,.25,d))*halo*I*1.15 + blue*streak*I*.6;',
+      ' col+=blue*.07*I*exp(-d*2.6);',
+      ' col+=vec3(1.,.74,.52)*exp(-d*d*1400.)*uE*.85;',
+      ' gl_FragColor=vec4(col,1.);',
+      '}'
+    ].join('\n');
+    function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; }
+    var v = sh(gl.VERTEX_SHADER, vs), f = sh(gl.FRAGMENT_SHADER, fs);
+    if (!v || !f) return null;
+    var pr = gl.createProgram(); gl.attachShader(pr, v); gl.attachShader(pr, f); gl.linkProgram(pr);
+    if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return null;
+    gl.useProgram(pr);
+    var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+    var loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    var U = {}; ['uRes', 'uPos', 'uI', 'uT', 'uE'].forEach(function (k) { U[k] = gl.getUniformLocation(pr, k); });
+    var dpr = Math.min(window.devicePixelRatio || 1, 2) * (mobile ? 0.5 : 0.75);
+    box.appendChild(c);
+    var pt = { x: .2, y: .8 };
+    function size() {
+      var a = arcPoint(); pt = a;
+      c.width = Math.max(1, Math.round(a.w * dpr)); c.height = Math.max(1, Math.round(a.h * dpr));
+      gl.viewport(0, 0, c.width, c.height);
+    }
+    size();
+    return {
+      canvas: c,
+      draw: function (I, E, t) {
+        gl.uniform2f(U.uRes, c.width, c.height);
+        gl.uniform2f(U.uPos, pt.x * c.width, (1 - pt.y) * c.height);
+        gl.uniform1f(U.uI, I); gl.uniform1f(U.uE, E); gl.uniform1f(U.uT, t);
+        gl.drawArrays(gl.TRIANGLES, 0, 3);
+      },
+      live: function () { c.classList.add('is-live'); },
+      dispose: function () { c.remove(); var ext = gl.getExtension('WEBGL_lose_context'); if (ext) ext.loseContext(); }
+    };
   }
-  const message = `Вітаю, KOLOS TIG!\n\nМатеріал: ${$('#material').value}.\nЗадача: ${description}\n\nДодам фото деталі. Підкажіть, будь ласка, можливість виконання, орієнтовну вартість і терміни.`;
-  $('#prepared-request').value = message;
-  try {
-    if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
-    await navigator.clipboard.writeText(message);
-    $('#manual-copy').hidden = true;
-    $('#copy-status').textContent = 'Скопійовано. Відкрийте Instagram, вставте запит і додайте фото.';
-  } catch {
-    $('#manual-copy').hidden = false;
-    $('#copy-status').textContent = 'Скопіюйте готовий текст нижче та надішліть його в Instagram.';
-    $('#prepared-request').focus();
-    $('#prepared-request').select();
+
+  /* ---------- «Шолом угору» ---------- */
+  function intro() {
+    if (!lens || !html.classList.contains('intro')) return;
+    if (window.scrollY > 200) { html.classList.remove('intro'); return; }
+    var mobile = window.innerWidth < 1021;
+    var a = arcPoint();
+    // віконце фільтра навколо дуги
+    var wl = Math.max(0.02, a.x - 0.17), wr = Math.max(0.02, 1 - (a.x + (mobile ? 0.42 : 0.40)));
+    var wt = Math.max(0.04, a.y - (mobile ? 0.38 : 0.34)), wb = Math.max(0.03, 1 - (a.y + 0.10));
+    var win = 'inset(' + (wt * 100).toFixed(1) + '% ' + (wr * 100).toFixed(1) + '% ' + (wb * 100).toFixed(1) + '% ' + (wl * 100).toFixed(1) + '% round 14px)';
+    lens.style.setProperty('--ax', (a.x * 100) + '%'); lens.style.setProperty('--ay', (a.y * 100) + '%');
+
+    var tint = lens.querySelector('.lens__tint');
+    var lines = document.querySelectorAll('.hero h1 .ln > span');
+    var sub = document.querySelector('.hero__sub');
+    var metals = document.querySelector('.hero__metals');
+    var cap = document.querySelector('.hero__photo figcaption');
+
+    // явні стартові стани inline (той самий вигляд, що й .intro), тоді знімаємо клас
+    gsap.set(lens, { clipPath: win });
+    gsap.set(img, { filter: 'brightness(0.34) saturate(0.35)' });
+    gsap.set(tint, { opacity: 1 });
+    gsap.set(lines, { y: 0, yPercent: 105 }); // y: 0 — інакше GSAP читає CSS translateY(105%) як пікселі (R15 пастка 4)
+    gsap.set(sub, { opacity: 0, y: 14 });
+    gsap.set([metals, cap], { opacity: 0 });
+    html.classList.remove('intro');
+
+    var arc = makeArc(arcBox, mobile);
+    var st = { i: 0, e: 0 }, t0 = performance.now(), running = true;
+    function frame(now) {
+      if (!running) return;
+      if (arc) arc.draw(st.i, st.e, (now - t0) / 1000);
+      requestAnimationFrame(frame);
+    }
+    if (arc) { arc.draw(0, 0, 0); requestAnimationFrame(function () { requestAnimationFrame(function () { arc.live(); }); }); requestAnimationFrame(frame); }
+
+    var tl = gsap.timeline({
+      onComplete: function () {
+        running = false;
+        if (arc) arc.dispose();
+        gsap.set(lens, { clearProps: 'clipPath' });
+        gsap.set(img, { clearProps: 'filter' });
+      }
+    });
+    // дуга: удар, мерехтіння, згасання, жаринка
+    tl.to(st, { i: 1.4, duration: .09, ease: 'power4.out' }, .06)
+      .to(st, { i: 1, duration: .16, ease: 'power2.out' }, .15)
+      .to(st, { i: 0, duration: .24, ease: 'expo.in' }, .58)
+      .to(st, { e: 1, duration: .06, ease: 'none' }, .76)
+      .to(st, { e: 0, duration: .55, ease: 'power2.out' }, .82);
+    if (!arc && poster) {
+      tl.fromTo(poster, { opacity: 0 }, { opacity: 1, duration: .09, ease: 'power4.out' }, .06)
+        .to(poster, { keyframes: [{ opacity: .78, duration: .07 }, { opacity: 1, duration: .05 }, { opacity: .7, duration: .08 }, { opacity: .95, duration: .06 }, { opacity: .85, duration: .08 }], ease: 'none' }, .15)
+        .to(poster, { opacity: 0, duration: .24, ease: 'expo.in' }, .58);
+    }
+    // текст: Support, накладається на дугу
+    tl.to(lines[0], { yPercent: 0, duration: .8, ease: EASE_IN }, .14)
+      .to(lines[1], { yPercent: 0, duration: .8, ease: EASE_IN }, .23)
+      .to(sub, { opacity: 1, y: 0, duration: .5, ease: EASE_IN }, .42);
+    // шолом угору: віконце → повний кадр, фільтр → ясно (наслідок згаслої дуги)
+    tl.fromTo(lens, { clipPath: win }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: .82, ease: EASE_MOVE }, .78)
+      .fromTo(img, { filter: 'brightness(0.34) saturate(0.35)' }, { filter: 'brightness(1) saturate(1)', duration: .82, ease: EASE_MOVE }, .78)
+      .to(tint, { opacity: 0, duration: .82, ease: EASE_MOVE }, .78)
+      .to([metals, cap], { opacity: 1, duration: .5, ease: 'power1.out' }, 1.1);
   }
-});
-$('#task-description').addEventListener('input', () => {
-  $('#task-description').setCustomValidity('');
-  $('#copy-status').textContent = '';
-  $('#manual-copy').hidden = true;
-});
-$('#material').addEventListener('change', () => {
-  $('#copy-status').textContent = '';
-  $('#manual-copy').hidden = true;
-});
-$('#year').textContent = new Date().getFullYear();
+
+  /* ---------- прокрутка ---------- */
+  function scrollMotion() {
+    if (!window.ScrollTrigger) return;
+    var mm = gsap.matchMedia();
+    mm.add('(prefers-reduced-motion: no-preference)', function () {
+      // перехід hero → метали: маска опускається (scrub)
+      var shade = document.querySelector('.lens__shade');
+      if (shade) gsap.fromTo(shade, { opacity: 0 }, { opacity: .78, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'center top', scrub: true } });
+      // відблиск дуги вздовж шва на великій плитці
+      var glint = document.querySelector('.glint');
+      if (glint) gsap.fromTo(glint, { x: 0, xPercent: -130, rotation: 50 }, { xPercent: 470, rotation: 50, ease: 'none', scrollTrigger: { trigger: '.tile--a', start: 'top 80%', end: 'bottom 20%', scrub: true } });
+      // шов між кроками: горизонтальний на desktop, вертикальний на телефоні
+      var seam = document.querySelector('.steps__seam'), track = document.querySelector('.steps__track');
+      if (seam && track) {
+        var wide = window.matchMedia('(min-width: 1021px)').matches;
+        gsap.fromTo(seam, wide ? { scaleX: 0 } : { scaleY: 0 }, Object.assign(wide ? { scaleX: 1 } : { scaleY: 1 },
+          { ease: 'none', scrollTrigger: { trigger: track, start: 'top 80%', end: wide ? 'top 40%' : 'bottom 55%', scrub: true } }));
+      }
+    });
+  }
+
+  /* Входи нижче екрана: ставляться лише після першої реальної прокрутки й лише для того, що ще під екраном
+     (fail-open: без прокрутки, на скриншоті повної сторінки, без JS — усе видно). */
+  function entrances() {
+    if (!window.ScrollTrigger) return;
+    var armed = false;
+    function below(el) { return el.getBoundingClientRect().top > window.innerHeight * 0.96; }
+    function arm() {
+      if (armed || window.scrollY < 4) return;
+      armed = true; window.removeEventListener('scroll', arm);
+      var ST = window.ScrollTrigger;
+
+      // H2 — прохід дуги (Lead секції)
+      document.querySelectorAll('.sweep').forEach(function (h) {
+        if (!below(h)) return;
+        var bar = document.createElement('span'); bar.className = 'arcbar'; bar.setAttribute('aria-hidden', 'true'); h.appendChild(bar);
+        gsap.set(h, { clipPath: 'inset(-12% 100% -12% 0%)' });
+        ST.create({ trigger: h, start: 'clamp(top 84%)', once: true, onEnter: function () {
+          var w = h.getBoundingClientRect().width;
+          gsap.timeline({ onComplete: function () { gsap.set(h, { clearProps: 'clipPath' }); bar.remove(); } })
+            .fromTo(h, { clipPath: 'inset(-12% 100% -12% 0%)' }, { clipPath: 'inset(-12% 0% -12% 0%)', duration: .8, ease: EASE_IN }, 0)
+            .fromTo(bar, { x: 0, opacity: 1 }, { x: w - 3, duration: .8, ease: EASE_IN }, 0)
+            .to(bar, { opacity: 0, duration: .18, ease: 'power1.in' }, .34);
+        } });
+      });
+
+      // метали: Support за H2, затримки зменшуються
+      var rows = [].filter.call(document.querySelectorAll('.metal'), below);
+      if (rows.length) {
+        gsap.set(rows, { opacity: 0, y: 14 });
+        ST.create({ trigger: '.metals__list', start: 'clamp(top 85%)', once: true, onEnter: function () {
+          var d = [0, .1, .17];
+          rows.forEach(function (r, i) { gsap.to(r, { opacity: 1, y: 0, duration: .5, delay: .12 + (d[i] || .2), ease: EASE_IN }); });
+        } });
+      }
+
+      // галерея: велика плитка — Lead, решта — тим самим жестом з накладанням
+      var tiles = [].filter.call(document.querySelectorAll('.tile .tile__img, .master__photo'), below);
+      if (tiles.length) {
+        var delays = [0, .05, .1, .14, .17, .2];
+        gsap.set(tiles, { clipPath: 'inset(100% 0% 0% 0%)' });
+        tiles.forEach(function (t, i) {
+          ST.create({ trigger: t, start: 'clamp(top bottom)', once: true, onEnter: function () {
+            var big = t.closest('.tile--a') || t.classList.contains('master__photo');
+            gsap.to(t, { clipPath: 'inset(0% 0% 0% 0%)', duration: big ? .6 : .45, delay: big ? 0 : delays[(i % 3) + 1], ease: EASE_MOVE,
+              onComplete: function () { gsap.set(t, { clearProps: 'clipPath' }); } });
+          } });
+        });
+      }
+    }
+    window.addEventListener('scroll', arm, { passive: true });
+  }
+
+  function start() { intro(); scrollMotion(); entrances(); }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(start); else start();
+})();
