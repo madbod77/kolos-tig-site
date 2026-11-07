@@ -3,242 +3,252 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0f1113">
-  <title>KOLOS TIG — TIG-зварювання в Києві: нержавійка, алюміній, сталь</title>
-  <meta name="description" content="KOLOS TIG — аргонне (TIG) зварювання в Києві. Нержавійка, алюміній, сталь: ремонт деталей і виготовлення виробів. Напишіть майстру в Instagram @kolos.tig.">
-  <meta property="og:title" content="KOLOS TIG — точність, яка з’єднує">
-  <meta property="og:description" content="TIG-зварювання в Києві: нержавійка, алюміній, сталь. Ремонт деталей і виготовлення виробів.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://madbod77.github.io/kolos-tig-site/">
-  <meta property="og:image" content="https://madbod77.github.io/kolos-tig-site/assets/work/older-1.jpg">
+  <title>KOLOS TIG — TIG-зварювання Олександра Колоса, Київ</title>
+  <meta name="description" content="Олександр Колос, TIG-зварювання в Києві понад 10 років: нержавійка, сталь, алюміній, титан. Ремонт деталей і вироби під замовлення. Телефон 063 598 08 29.">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="assets/fonts/oswald-500.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="assets/fonts/manrope-400.ttf" as="font" type="font/ttf" crossorigin>
-  <script>
-    (function (d) {
-      var h = d.documentElement; h.classList.add('js');
-      if (window.matchMedia && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-        h.classList.add('intro');
-        setTimeout(function () { h.classList.remove('intro'); }, 2600); /* страховка: без app.js фото не лишається темним */
-      }
-    })(document);
-  </script>
+  <link rel="preload" href="assets/fonts/unbounded-cyr.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
-  <script src="assets/vendor/gsap.min.js" defer></script>
-  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
-  <script src="app.js" defer></script>
+  <script>
+    // Початковий «плаский» стан ставить лише JS і лише без reduced motion: без JS бак зібраний, усе видно.
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('fold-ready');
+      // страховка: якщо GSAP чи app.js не завантажились, повертаємо зібраний бак і видимий текст
+      setTimeout(function () { if (!window.__kolosReady) document.documentElement.classList.remove('fold-ready'); }, 3500);
+    }
+  </script>
 </head>
-<body class="hero-on">
-  <svg class="defs" aria-hidden="true" focusable="false">
-    <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></symbol>
-    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></symbol>
-    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
-  </svg>
-
-  <a class="skip" href="#main">Перейти до вмісту</a>
-
+<body>
+  <a class="skip" href="#main">Перейти до змісту</a>
   <header class="top">
-    <div class="wrap top__in">
-      <a class="logo" href="#top" aria-label="KOLOS TIG — на початок сторінки">KOLOS <b>TIG</b></a>
-      <nav class="nav" aria-label="Розділи сторінки">
-        <a href="#metals">Метали</a>
-        <a href="#work">Роботи</a>
-        <a href="#master">Майстер</a>
-        <a href="#faq">Питання</a>
+    <div class="top__in">
+      <a class="logo" href="#top" aria-label="KOLOS TIG, на початок">KOLOS <span>TIG</span></a>
+      <nav aria-label="Розділи">
+        <a href="#journal">Журнал робіт</a>
+        <a href="#seams">Шви</a>
+        <a href="#master">Олександр</a>
       </nav>
-      <a class="btn btn--sm top__cta" href="https://www.instagram.com/kolos.tig/" target="_blank" rel="noopener noreferrer">
-        <svg aria-hidden="true"><use href="#i-ig"/></svg><span>Instagram</span><span class="sr">(відкриється в новій вкладці)</span>
-      </a>
+      <a class="top__tel" href="tel:+380635980829"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.6 3h3l1.5 4.2-2 1.4a12 12 0 0 0 6.3 6.3l1.4-2L21 14.4v3A2.6 2.6 0 0 1 18.4 20 15.4 15.4 0 0 1 4 5.6 2.6 2.6 0 0 1 6.6 3z"/></svg>063 598 08 29</a>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="hero__text">
-        <p class="kicker">TIG-зварювання · Київ</p>
-        <h1 id="hero-title"><span class="ln"><span>Точність,</span></span> <span class="ln"><span>яка з’єднує.</span></span></h1>
-        <div class="hero__sub">
-          <p class="hero__lead">Аргонне зварювання нержавійки, алюмінію та сталі. Ремонтуємо деталі. Втілюємо ваші ідеї.</p>
-          <div class="hero__cta">
-            <a class="btn btn--lg" id="hero-cta" href="https://www.instagram.com/kolos.tig/" target="_blank" rel="noopener noreferrer">
-              <svg aria-hidden="true"><use href="#i-ig"/></svg>Написати в Instagram<span class="sr">(відкриється в новій вкладці)</span>
-            </a>
-            <a class="link" href="#work">Дивитися роботи <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <!-- Карта 1: перший екран і закріплена сцена «розгортка → бак» -->
+    <section class="card1" id="top" aria-labelledby="h1">
+      <div class="run">
+      <div class="stage">
+        <div class="lcol">
+          <div class="intro">
+            <h1 id="h1"><span class="ln"><span>TIG-зварювання</span></span> <span class="ln"><span>Олександра Колоса</span></span></h1>
+            <p class="lead">Нержавійка, сталь, алюміній і титан. Ремонт металевих деталей і вироби під замовлення в Києві, понад&nbsp;10&nbsp;років з&nbsp;аргоном.</p>
+            <p class="intro__act">
+              <a class="btn" href="tel:+380635980829"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.6 3h3l1.5 4.2-2 1.4a12 12 0 0 0 6.3 6.3l1.4-2L21 14.4v3A2.6 2.6 0 0 1 18.4 20 15.4 15.4 0 0 1 4 5.6 2.6 2.6 0 0 1 6.6 3z"/></svg>063 598 08 29</a>
+              <a class="link" href="https://www.instagram.com/kolos.tig/" target="_blank" rel="noopener noreferrer">або в Direct @kolos.tig<span class="sr"> (відкриється в новій вкладці)</span></a>
+            </p>
+            <p class="intro__case">Поруч — розгортка бака для системи опалення з його посту. Гортайте: вона складеться в бак.</p>
           </div>
-        </div>
-      </div>
-      <figure class="hero__photo">
-        <div class="lens">
-          <img src="assets/work/older-1.jpg" width="903" height="1199" alt="Майстер KOLOS TIG у зварювальній масці веде TIG-пальник по металевому виробу в майстерні" fetchpriority="high">
-          <div class="lens__tint" aria-hidden="true"></div>
-          <div class="arc" aria-hidden="true"><span class="arc__poster"></span></div>
-          <div class="lens__shade" aria-hidden="true"></div>
-        </div>
-        <figcaption>Майстер KOLOS TIG за роботою</figcaption>
-      </figure>
-      <ul class="hero__metals" aria-label="Що робимо">
-        <li><b>Ремонт</b><span>можливість визначаємо після огляду</span></li>
-        <li><b>Виготовлення</b><span>за розмірами або кресленням</span></li>
-        <li><b>Київ</b><span>місце й час — у повідомленнях Instagram</span></li>
-      </ul>
-    </section>
-
-    <section class="metals" id="metals" aria-labelledby="metals-title">
-      <div class="wrap metals__grid">
-        <div class="metals__head">
-          <h2 class="h2 sweep" id="metals-title">Кожен метал — свій підхід</h2>
-          <p>У кожного металу — свої властивості. У кожної задачі — своє рішення. Від відновлення деталі до виготовлення виробу: працюємо з увагою до форми, функції та шва.</p>
-        </div>
-        <ul class="metals__list">
-          <li class="metal rise">
-            <h3>Нержавійка</h3>
-            <p>Акуратні з’єднання, для яких важливі і міцність, і вигляд. Труби, баки, деталі та конструкції.</p>
-          </li>
-          <li class="metal rise">
-            <h3>Алюміній</h3>
-            <p>Відновлення тріщин, корпусів і кріплень. Ремонт автомобільних деталей, велосипедів та електросамокатів.</p>
-          </li>
-          <li class="metal rise">
-            <h3>Сталь</h3>
-            <p>Від окремого кронштейна до металевої конструкції. Зварювання та виготовлення за розмірами або кресленням.</p>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="work" id="work" aria-labelledby="work-title">
-      <div class="wrap">
-        <div class="work__head">
-          <h2 class="h2 sweep" id="work-title">Робота в деталях</h2>
-          <a class="link" href="https://www.instagram.com/kolos.tig/" target="_blank" rel="noopener noreferrer">Більше робіт в Instagram <svg aria-hidden="true"><use href="#i-arrow"/></svg><span class="sr">(відкриється в новій вкладці)</span></a>
-        </div>
-        <ul class="gallery">
-          <li class="tile tile--a">
-            <figure>
-              <div class="tile__img"><img src="assets/work/older-2.jpg" width="915" height="1199" loading="lazy" alt="Зварний шов з рівномірною лускою зблизька на темному металі"><span class="glint" aria-hidden="true"></span></div>
-              <figcaption><strong>Шов зблизька</strong></figcaption>
-            </figure>
-          </li>
-          <li class="tile tile--b">
-            <figure>
-              <div class="tile__img"><img src="assets/work/older-8.jpg" width="750" height="889" loading="lazy" alt="Рівний TIG-шов на куті металевого виробу з кольорами побіжалості"></div>
-              <figcaption><strong>Шов на виробі</strong></figcaption>
-            </figure>
-          </li>
-          <li class="tile tile--c">
-            <figure>
-              <div class="tile__img"><img src="assets/work/older-7.jpg" width="1000" height="750" loading="lazy" alt="Відновлена металева деталь із наплавленими швами навколо отворів"></div>
-              <figcaption><strong>Відновлена деталь</strong></figcaption>
-            </figure>
-          </li>
-          <li class="tile tile--e">
-            <figure>
-              <div class="tile__img"><img src="assets/work/instagram-3.jpg" width="480" height="640" loading="lazy" alt="Виготовлений металевий бак для опалення на зварювальному столі, напис на фото «Бак для опалення»"></div>
-              <figcaption><strong>Бак для опалення</strong><a href="https://www.instagram.com/kolos.tig/p/DeOrWaziLXO/" target="_blank" rel="noopener noreferrer">Пост @kolos.tig<span class="sr"> — бак для опалення (відкриється в новій вкладці)</span></a></figcaption>
-            </figure>
-          </li>
-          <li class="tile tile--f">
-            <figure>
-              <div class="tile__img"><img src="assets/work/instagram-11.jpg" width="480" height="640" loading="lazy" alt="Металева стійка для інформації з похилою панеллю, напис на фото «Стійка для інформації»"></div>
-              <figcaption><strong>Стійка для інформації</strong><a href="https://www.instagram.com/kolos.tig/p/Db-GcSLCFna/" target="_blank" rel="noopener noreferrer">Пост @kolos.tig<span class="sr"> — стійка для інформації (відкриється в новій вкладці)</span></a></figcaption>
-            </figure>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="master" id="master" aria-labelledby="master-title">
-      <div class="master__grid">
-        <figure class="master__photo">
-          <img src="assets/work/older-3.jpg" width="900" height="1200" loading="lazy" alt="Зварене кутове з’єднання двох профільних труб на зварювальному столі">
-          <figcaption>З’єднання профілів</figcaption>
-        </figure>
-        <div class="master__text">
-          <h2 class="h2 sweep" id="master-title">Майстерність без компромісів</h2>
-          <p class="master__lead">Хороша робота починається з розуміння вашої задачі.</p>
-          <p>Спочатку — огляд, матеріал і призначення деталі. Потім — підготовка та зварювання. Кожен крок має значення для кінцевого результату.</p>
-          <p class="sign"><strong>Олександр</strong><span>майстер KOLOS TIG, Київ</span></p>
-        </div>
-      </div>
-      <div class="steps-band">
-      <div class="wrap steps">
-        <h3 class="h3">Від задачі до готової деталі</h3>
-        <div class="steps__track">
-          <ol class="steps__list">
-            <li><h4>Покажіть задачу</h4><p>Надішліть фото, розміри або креслення в Instagram.</p></li>
-            <li><h4>Узгодимо деталі</h4><p>Обговоримо можливість ремонту, вартість і терміни.</p></li>
-            <li><h4>Візьмемо в роботу</h4><p>Підготуємо метал і виконаємо погоджені роботи.</p></li>
-            <li><h4>Готово до справи</h4><p>Перевіримо результат і домовимося про передачу.</p></li>
+          <div class="route" aria-labelledby="card1-title">
+          <p class="route__kicker">Маршрутна карта з посту</p>
+          <h2 id="card1-title" class="route__title">Бак для системи опалення</h2>
+          <p class="route__spec"><b>AISI 304</b>, лист 1,5&nbsp;мм</p>
+          <ol class="route__ops">
+            <li data-at="0.12">Розкрій</li>
+            <li data-at="0.3">Складання й прихватки</li>
+            <li data-at="0.5">Алюмінієві пластини для відведення тепла</li>
+            <li data-at="0.58">TIG у режимі Puls, контроль тепловкладення</li>
+            <li data-at="0.68">Знецвітлення швів</li>
+            <li data-at="0.76">Електрохімічна обробка й пасивація стиків зсередини</li>
+            <li data-at="0.86">Піскоструменева обробка</li>
           </ol>
-          <span class="steps__seam" aria-hidden="true"></span>
+          <a class="link route__src" href="https://www.instagram.com/kolos.tig/p/DeOrWaziLXO/" target="_blank" rel="noopener noreferrer">Пост про бак в Instagram<span class="sr"> (відкриється в новій вкладці)</span></a>
         </div>
-      </div>
-      </div>
-    </section>
 
-    <section class="faq" id="faq" aria-labelledby="faq-title">
-      <div class="wrap faq__grid">
-        <div class="faq__aside">
-          <h2 class="h2 sweep" id="faq-title">Перед початком</h2>
-          <p>Не знайшли відповідь? Напишіть майстру напряму.</p>
-          <a class="link" href="https://www.instagram.com/kolos.tig/" target="_blank" rel="noopener noreferrer">@kolos.tig <svg aria-hidden="true"><use href="#i-arrow"/></svg><span class="sr">(відкриється в новій вкладці)</span></a>
         </div>
-        <div class="faq__list">
-          <details>
-            <summary>Скільки коштує зварювання?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
-            <p>Вартість залежить від матеріалу, пошкодження, обсягу та підготовки. Надішліть фото й короткий опис задачі — майстер зможе зорієнтувати після огляду.</p>
-          </details>
-          <details>
-            <summary>Що потрібно для оцінки роботи?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
-            <p>Загальне фото деталі, кілька фото пошкодження зблизька, приблизні розміри та матеріал, якщо він відомий. Для виготовлення — ескіз або креслення.</p>
-          </details>
-          <details>
-            <summary>Чи можна відновити тріснуту деталь?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
-            <p>Можливість ремонту визначається після огляду. Важливі сплав, розташування тріщини та навантаження на деталь. Надішліть фото, щоб обговорити ваш випадок.</p>
-          </details>
-          <details>
-            <summary>Де працює майстерня?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
-            <p>У Києві. Точне місце, час візиту та спосіб передачі деталі узгодьте з майстром у повідомленнях Instagram перед приїздом.</p>
-          </details>
-          <div class="todo" aria-labelledby="todo-title">
-            <h3 class="h3" id="todo-title">Уточнюйте в Instagram</h3>
-            <p>Цих даних поки немає на сайті — майстер підкаже особисто.</p>
-            <ul class="todo__list">
-              <li><span class="tag" lang="en">TODO</span>адреса або район майстерні</li>
-              <li><span class="tag" lang="en">TODO</span>графік роботи</li>
-              <li><span class="tag" lang="en">TODO</span>телефон та інші контакти</li>
-              <li><span class="tag" lang="en">TODO</span>орієнтовні ціни</li>
-              <li><span class="tag" lang="en">TODO</span>типові терміни виконання</li>
-              <li><span class="tag" lang="en">TODO</span>гарантія на шви</li>
-              <li><span class="tag" lang="en">TODO</span>відгуки клієнтів</li>
-              <li><span class="tag" lang="en">TODO</span>досвід майстра і свіжі роботи з Instagram</li>
-              <li><span class="tag" lang="en">TODO</span>оригінальний файл логотипа KOLOS TIG</li>
-              <li><span class="tag" lang="en">TODO</span>фото робіт з Instagram у високій роздільності</li>
-            </ul>
+        <div class="scene">
+        <div class="bench" aria-hidden="true">
+          <div class="dev">
+            <div class="box">
+              <i class="panel base"><span class="dim">AISI 304 · 1,5 мм</span></i>
+              <i class="panel wall front"><b class="tack t1"></b><b class="tack t2"></b></i>
+              <i class="panel wall back"><b class="tack t1"></b><b class="tack t2"></b><i class="panel lid"></i></i>
+              <i class="panel wall left"><b class="seam s1"><u></u></b><b class="seam s2"><u></u></b></i>
+              <i class="panel wall right"><b class="seam s1"><u></u></b><b class="seam s2"><u></u></b></i>
+            </div>
+            <span class="laser"></span>
           </div>
+          <p class="bench__note">Розгортка: дно, чотири стінки й половина кришки. Лінії гибу — пунктир.</p>
         </div>
+
+        <figure class="result">
+          <img src="assets/work/instagram-3.jpg" width="480" height="640" alt="Готовий бак для опалення з нержавійки на зварювальному столі майстерні; на фото напис «Бак для опалення»">
+          <figcaption>Бак на столі майстерні. Фото з посту @kolos.tig</figcaption>
+        </figure>
+        </div>
+      </div>
       </div>
     </section>
 
-    <section class="contact" id="contact" aria-labelledby="contact-title">
-      <div class="wrap contact__in">
-        <h2 class="h-cta sweep" id="contact-title">З’єднаємо вашу ідею.</h2>
-        <div class="contact__side">
-          <p>Почніть з фото деталі. Далі знайдемо рішення разом.</p>
-          <a class="btn btn--lg" href="https://www.instagram.com/kolos.tig/" target="_blank" rel="noopener noreferrer">
-            <svg aria-hidden="true"><use href="#i-ig"/></svg>Написати @kolos.tig<span class="sr">(відкриється в новій вкладці)</span>
-          </a>
+    <!-- Журнал: 11 інших карт, фільтр марками металу -->
+    <section class="journal" id="journal" aria-labelledby="journal-title">
+      <div class="sheet">
+        <span class="rule" aria-hidden="true"></span>
+        <div class="journal__head">
+          <h2 id="journal-title">Ще 11 карт з постів</h2>
+          <p>Як Олександр сам їх описує: що за деталь, з чого, що з нею зробили. Ціни — лише там, де він їх назвав.</p>
         </div>
+        <div class="grades" role="group" aria-label="Показати роботи за металом">
+          <button type="button" aria-pressed="true" data-grade="all">Усі <small>11</small></button>
+          <button type="button" aria-pressed="false" data-grade="al">Алюміній <small>3</small></button>
+          <button type="button" aria-pressed="false" data-grade="ti">Титан <small>1</small></button>
+          <button type="button" aria-pressed="false" class="g-wide" data-grade="other">Метал не названо <small>2</small></button>
+          <span class="grades__group" role="presentation"><span class="grades__label">Нержавійка:</span>
+            <button type="button" aria-pressed="false" data-grade="304">AISI 304 <small>2</small></button>
+            <button type="button" aria-pressed="false" data-grade="420">AISI 420 <small>1</small></button>
+            <button type="button" aria-pressed="false" class="g-wide" data-grade="inox">Марку не названо <small>2</small></button>
+          </span>
+        </div>
+        <p class="grades__status" aria-live="polite" id="grade-status">Показано 11 з 11 карт</p>
+
+        <ol class="log">
+          <li class="entry" data-grade="420">
+            <h3>Ніж, зламаний навпіл</h3>
+            <p class="entry__metal">AISI 420 / EN 1.4028 / X30Cr13 — мартенситна сталь, ~0,3&nbsp;% C</p>
+            <p class="entry__route">зачистка до «живого» металу <i>→</i> TIG з присадкою на мінімальному тепловкладенні <i>→</i> повільне охолодження <i>→</i> механічна обробка шва <i>→</i> поліровка</p>
+            <p class="entry__src"><a href="https://www.instagram.com/kolos.tig/p/DWlEbmaiMlj/" target="_blank" rel="noopener noreferrer">пост<span class="sr"> про ніж (відкриється в новій вкладці)</span></a></p>
+          </li>
+          <li class="entry entry--quote" data-grade="al">
+            <h3>Піддон авто</h3>
+            <p class="entry__metal">Литий алюміній</p>
+            <p class="entry__route">ремонтна вставка замість «заливки» <i>→</i> контроль температури й проплавлення</p>
+            <blockquote><p>«Я не роблю „аби трималось“. Я роблю ремонт, який працює».</p></blockquote>
+            <p class="entry__src"><a href="https://www.instagram.com/kolos.tig/p/DXHR6O0CGlc/" target="_blank" rel="noopener noreferrer">пост<span class="sr"> про піддон (відкриється в новій вкладці)</span></a></p>
+          </li>
+          <li class="entry entry--quote" data-grade="al">
+            <h3>Розпорка стаканів BMW E32</h3>
+            <p class="entry__metal">Алюміній: тріщини й пористість</p>
+            <p class="entry__route">кінці тріщин засвердлено <i>→</i> розшарошено до живого металу <i>→</i> знято оксид <i>→</i> знежирення <i>→</i> прогрів, масло й шлак виходять назовні <i>→</i> повторна очистка <i>→</i> лише потім TIG</p>
+            <blockquote><p>«Тут не „підварити“. Тут — відновити деталь правильно».</p></blockquote>
+            <p class="entry__src"><a href="https://www.instagram.com/kolos.tig/p/DXeIsCJCGFo/" target="_blank" rel="noopener noreferrer">пост<span class="sr"> про розпорку BMW (відкриється в новій вкладці)</span></a></p>
+          </li>
+          <li class="entry" data-grade="al">
+            <h3>Вушко колектора Land Cruiser</h3>
+            <p class="entry__metal">Алюміній. Причина поломки — перетяжка болтів</p>
+            <p class="entry__route">фаски фрезою <i>→</i> прихватки <i>→</i> локальний прогрів <i>→</i> аргон <i>→</i> відновлення форми</p>
+            <p class="entry__src"><a href="https://www.instagram.com/kolos.tig/p/DYzOqw7CJUZ/" target="_blank" rel="noopener noreferrer">пост<span class="sr"> про вушко колектора (відкриється в новій вкладці)</span></a></p>
+          </li>
+          <li class="entry entry--price" data-grade="inox">
+            <h3>Підставка для ніг у перукарське крісло</h3>
+            <p class="entry__metal">Нержавійка, сатин · 290 × 310 × 170&nbsp;мм</p>
+            <p class="entry__route">інші розміри — під замовлення</p>
+            <p class="price"><b>2000&nbsp;грн</b>/шт <span>від 5&nbsp;шт — 1700&nbsp;грн</span></p>
+            <p class="entry__src"><a href="https://www.instagram.com/kolos.tig/p/DV_oqqviHxX/" target="_blank" rel="noopener noreferrer">пост<span class="sr"> про підставку (відкриється в новій вкладці)</span></a></p>
+          </li>
+          <li class="entry entry--price" data-grade="304">
+            <h3>Полиця</h3>
+            <p class="entry__metal">AISI 304, 2&nbsp;мм · 555 × 135 × 70&nbsp;мм</p>
+            <p class="entry__route">лазерна порізка (азот) <i>→</i> TIG <i>→</i> порошкове фарбування «чорний мат»</p>
+            <p class="price"><b>3500&nbsp;грн</b>/шт <span>від 10&nbsp;шт — інша ціна</span></p>
+            <p class="entry__src"><a href="https://www.instagram.com/kolos.tig/p/DW51YvJCCoO/" target="_blank" rel="noopener noreferrer">пост<span class="sr"> про полицю (відкриється в новій вкладці)</span></a></p>
+          </li>
+          <li class="entry" data-grade="304">
+            <h3>Обідній комплект для сільгосп&shy;підприємства</h3>
+            <p class="entry__metal">Стіл і лавки з AISI 304, внутрішній каркас з профільної труби</p>
+            <p class="entry__route">шліфування <i>→</i> сатин</p>
+            <p class="entry__src"><a href="https://www.instagram.com/kolos.tig/p/DW1jocfCJFD/" target="_blank" rel="noopener noreferrer">пост<span class="sr"> про обідній комплект (відкриється в новій вкладці)</span></a></p>
+          </li>
+          <li class="entry" data-grade="other">
+            <h3>Каркас дивану</h3>
+            <p class="entry__metal">Труби (марку в пості не названо)</p>
+            <p class="entry__route">порізка, гнуття й фрезерування труб <i>→</i> TIG <i>→</i> шліфування <i>→</i> порошкове фарбування</p>
+            <p class="entry__src"><a href="https://www.instagram.com/kolos.tig/p/DWoFY9FCOuh/" target="_blank" rel="noopener noreferrer">пост<span class="sr"> про каркас дивану (відкриється в новій вкладці)</span></a></p>
+          </li>
+          <li class="entry" data-grade="inox">
+            <h3>Перфорована панель вентиляції</h3>
+            <p class="entry__metal">Нержавійка 1,5&nbsp;мм</p>
+            <p class="entry__route">деталі з листового металу: панелі, кронштейни, вентиляція</p>
+            <p class="entry__src"><a href="https://www.instagram.com/kolos.tig/p/DVp7gkZiKOL/" target="_blank" rel="noopener noreferrer">пост<span class="sr"> про панель вентиляції (відкриється в новій вкладці)</span></a></p>
+          </li>
+          <li class="entry entry--quote" data-grade="other">
+            <h3>Підлогова стійка для інформаційної таблички</h3>
+            <p class="entry__metal">Метал у пості не названо</p>
+            <p class="entry__route">лазерна порізка й гнуття <i>→</i> різка труб <i>→</i> контроль геометрії <i>→</i> TIG <i>→</i> шліфування</p>
+            <blockquote><p>«Не кожен стик, який бачиш, потрібно заварювати».</p></blockquote>
+            <p class="entry__src"><a href="https://www.instagram.com/kolos.tig/p/Db-GcSLCFna/" target="_blank" rel="noopener noreferrer">пост<span class="sr"> про стійку (відкриється в новій вкладці)</span></a></p>
+          </li>
+          <li class="entry entry--quote entry--peak" data-grade="ti">
+            <h3>Титанова обичайка</h3>
+            <p class="entry__metal">Титан</p>
+            <p class="entry__route">тріщина на прихватці, зробленій без захисного піддуву: показ, чому аргон потрібен з обох боків шва</p>
+            <blockquote><p>«У роботі з титаном дрібниць не буває. Навіть звичайна прихватка потребує дотримання правильної технології».</p></blockquote>
+            <p class="entry__src"><a href="https://www.instagram.com/kolos.tig/p/DfUl-06I9-5/" target="_blank" rel="noopener noreferrer">пост<span class="sr"> про титан (відкриється в новій вкладці)</span></a></p>
+          </li>
+        </ol>
+        <p class="journal__more">Ще в роликах: тумба під мийку, вушко радіатора, електросамокат, TIG проти лазера, тепловідведення від деформації, шліфування, кутове зʼєднання до й після. <a class="link" href="https://www.instagram.com/kolos.tig/" target="_blank" rel="noopener noreferrer">Усі 31 пост @kolos.tig<span class="sr"> (відкриється в новій вкладці)</span></a></p>
       </div>
     </section>
+
+    <!-- Шви крупно: справжні фото, асиметрично, з його словами -->
+    <section class="seams" id="seams" aria-labelledby="seams-title">
+      <div class="sheet">
+        <span class="rule" aria-hidden="true"></span>
+        <h2 id="seams-title" class="seams__title">Шви крупно</h2>
+        <figure class="ph ph--a"><div class="ph__img"><img src="assets/work/older-8.jpg" width="750" height="889" alt="Рівний TIG-шов на зовнішньому куті виробу з нержавійки, по краях кольори побіжалості"></div><figcaption>Кутовий шов на виробі</figcaption></figure>
+        <div class="seams__side">
+          <blockquote class="seams__quote">
+            <p>«У багатьох випадках це майже ювелірна робота — контроль процесу, точність і чистий акуратний шов».</p>
+            <footer>Олександр Колос</footer>
+          </blockquote>
+          <figure class="ph ph--b ph--fill"><div class="ph__img"><img src="assets/work/older-2.jpg" width="915" height="1199" alt="Зварний шов з рівномірною лускою зблизька на темному металі"></div><figcaption>Луска шва зблизька</figcaption></figure>
+        </div>
+        <figure class="ph ph--c"><div class="ph__img"><img src="assets/work/older-7.jpg" width="1000" height="750" alt="Відновлена лита деталь: наплавлені шви навколо отворів"></div><figcaption>Відновлена деталь: наплавлення навколо отворів</figcaption></figure>
+        <figure class="ph ph--d ph--fill"><div class="ph__img"><img src="assets/work/older-3.jpg" width="900" height="1200" alt="Зварене кутове зʼєднання двох профільних труб на зварювальному столі"></div><figcaption>Кутове зʼєднання профільних труб</figcaption></figure>
+        <p class="seams__src">Чотири фото з оголошення на OLX з посиланням на @kolos.tig; які це замовлення, не вказано.</p>
+      </div>
+    </section>
+
   </main>
 
-  <footer class="foot">
-    <div class="wrap foot__in">
-      <a class="logo" href="#top" aria-label="KOLOS TIG — на початок сторінки">KOLOS <b>TIG</b></a>
-      <p>Метал. Характер. Майстерність.</p>
-      <p>© 2026 KOLOS TIG · Київ</p>
+  <!-- Основний напис креслення: замовлення, виконавець, реквізити — одна рамка, а не «про нас» + CTA + футер -->
+  <footer class="stamp" id="master" aria-label="Основний напис: замовлення, майстер, контакти">
+    <div class="stamp__in">
+      <p class="stamp__kicker">Основний напис до всіх 12 карт</p>
+      <div class="tb">
+        <div class="tb__send">
+          <h2 id="send-title"><span class="tb__lbl">Надіслати</span>фото · розміри · креслення чи ескіз</h2>
+          <p>Олександр прорахує роботу й запропонує технологію. Для ремонту — «Скидай фото або відео, подивлюсь, чи є сенс ремонтувати».</p>
+        </div>
+        <div class="tb__act">
+          <a class="tel" href="tel:+380635980829"><small>Телефон</small>063 598 08 29</a>
+          <a class="link" href="https://www.instagram.com/kolos.tig/" target="_blank" rel="noopener noreferrer">Direct в Instagram @kolos.tig<span class="sr"> (відкриється в новій вкладці)</span></a>
+        </div>
+
+        <figure class="tb__photo"><img src="assets/work/older-1.jpg" width="903" height="1199" alt="Олександр Колос у зварювальній масці варить аргоном деталь з нержавійки"><figcaption>Фото з оголошення OLX</figcaption></figure>
+        <div class="tb__who">
+          <span class="tb__lbl">Розробив і зварив</span>
+          <h2 id="master-title">Олександр Колос</h2>
+          <p>понад 10 років, спеціалізація — TIG (аргон)</p>
+        </div>
+        <div class="tb__cell tb__codes"><span class="tb__lbl">Метали в його постах</span><p class="codes"><span>AISI 304</span> <span>AISI 420</span> <span>нержавійка</span> <span>сталь</span> <span>алюміній</span> <span>титан</span></p></div>
+        <div class="tb__cell"><span class="tb__lbl">Ремонти в журналі</span><p>ніж AISI 420, піддон, розпорка BMW E32, вушко колектора Land Cruiser, титанова обичайка. <a href="#journal">До журналу</a></p></div>
+        <div class="tb__cell"><span class="tb__lbl">Вироби в журналі</span><p>бак для опалення, полиця, підставка для ніг, обідній комплект, каркас дивану, панель вентиляції, стійка. <a href="#journal">До журналу</a></p></div>
+
+        <dl class="tb__req">
+          <div class="c-name"><dt>Майстерня</dt><dd>KOLOS TIG</dd></div>
+          <div><dt>Місто</dt><dd>Київ</dd></div>
+          <div class="todo"><dt>Адреса</dt><dd>TODO: район майстерні уточнюється</dd></div>
+          <div class="todo"><dt>Графік</dt><dd>TODO</dd></div>
+          <div class="todo"><dt>Терміни</dt><dd>TODO: залежать від роботи, ще не названо</dd></div>
+          <div class="todo"><dt>Гарантія</dt><dd>TODO</dd></div>
+          <div class="todo"><dt>Відгуки</dt><dd>TODO: ще не зібрані</dd></div>
+          <div><dt>Джерело даних</dt><dd>31 пост @kolos.tig, березень–листопад 2026</dd></div>
+        </dl>
+      </div>
     </div>
   </footer>
+
+  <a class="dock is-hidden" href="tel:+380635980829"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6.6 3h3l1.5 4.2-2 1.4a12 12 0 0 0 6.3 6.3l1.4-2L21 14.4v3A2.6 2.6 0 0 1 18.4 20 15.4 15.4 0 0 1 4 5.6 2.6 2.6 0 0 1 6.6 3z"/></svg>Подзвонити: 063 598 08 29</a>
+
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="app.js" defer></script>
 </body>
 </html>
